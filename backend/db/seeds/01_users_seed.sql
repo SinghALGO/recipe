@@ -1,4 +1,4 @@
-INSERT INTO users (name, email, password) VALUES
+INSERT INTO users (username, email, password) VALUES
 ('J','j@email.com','abc123'),
 ('C','c@email.com', 'abc123'),
 ('Karan','k@email.com', 'abc123'),

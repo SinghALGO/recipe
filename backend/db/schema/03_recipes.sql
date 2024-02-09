@@ -4,8 +4,8 @@ CREATE TABLE recipes (
   name VARCHAR(255) NOT NULL,
   ingredients TEXT NOT NULL,
   cooking_time INT,
-  description TEXT,
+  description TEXT NOT NULL,
   category_id INTEGER REFERENCES categories(id),
   user_id INTEGER REFERENCES users(id),
-  image TEXT
+  img TEXT
 );
