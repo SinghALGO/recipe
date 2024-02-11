@@ -43,7 +43,8 @@ router.get('/category/:categoryId', (req, res) => {
 
 // Get favorite recipes
 router.get('/favorites/:userId', (req, res) => {
-  getFavoriteRecipes()
+  const userId = req.params.userId;
+  getFavoriteRecipes(userId)
     .then(favoriteRecipes => res.json(favoriteRecipes))
     .catch(error => {
       console.error('Error fetching favorite recipes:', error);

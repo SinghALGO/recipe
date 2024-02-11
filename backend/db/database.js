@@ -22,8 +22,8 @@ const getRecipesByCategory = (categoryId) => {
 };
 
 // Get favorite recipes
-const getFavoriteRecipes = () => {
-  return db.query('SELECT * FROM ') // Replace with your query
+const getFavoriteRecipes = (userId) => {
+  return db.query('SELECT recipes.* FROM recipes JOIN favorites ON recipes.id = favorites.recipe_id WHERE favorites.user_id=$1',[userId])
     .then(result => result.rows)
     .catch(error => {
       console.error('Error fetching favorite recipes:', error);
@@ -83,6 +83,47 @@ const deleteRecipe = (recipeId) => {
     });
 };
 
+const getUserByEmailAndPassword = async (email, password) => {
+  try {
+    const query = 'SELECT * FROM users WHERE email = $1 AND password = $2';
+    const values = [email, password];
+    const result = await db.query(query, values);
+    return result.rows[0];
+  } catch (error) {
+    console.error('Error fetching user:', error);
+    throw new Error('Error fetching user');
+  }
+};
+
+// Add a new favorite
+const addNewFavorite = async (userId, recipeId) => {
+  try {
+    const query = 'INSERT INTO favorites (user_id, recipe_id) VALUES ($1, $2) RETURNING *';
+    const values = [userId, recipeId];
+    const result = await db.query(query, values);
+    return result.rows[0];
+  } catch (error) {
+    console.error('Error adding new favorite:', error);
+    throw new Error('Error adding new favorite');
+  }
+};
+
+// Remove a favorite
+const removeFavorite = async (userId, recipeId) => {
+  try {
+    const query = 'DELETE FROM favorites WHERE user_id = $1 AND recipe_id = $2 RETURNING *';
+    const values = [userId, recipeId];
+    const result = await db.query(query, values);
+    if (result.rowCount === 0) {
+      throw new Error('Favorite not found');
+    }
+  } catch (error) {
+    console.error('Error removing favorite:', error);
+    throw new Error('Error removing favorite');
+  }
+};
+
+
 module.exports = {
   getAllRecipes,
   getRecipesByCategory,
@@ -90,5 +131,8 @@ module.exports = {
   addRecipe,
   editRecipe,
   deleteRecipe,
-  getCategoriesList
+  getCategoriesList,
+  getUserByEmailAndPassword,
+  addNewFavorite,
+  removeFavorite
 };
