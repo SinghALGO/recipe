@@ -19,6 +19,8 @@ const initialState = {
   modalStatus: false,
   userId: ""
 };
+
+console.log(initialState.recipes);
 // ADD SWITCH CASE
 const reducer = (state, action) => {
   switch (action.type) {
@@ -98,7 +100,7 @@ const useApplicationData = () => {
   const handleAddRecipe = async (recipe) => {
     try {
       const api = await fetch(
-        `https://api.spoonacular.com/recipes/random?apiKey=${process.env.REACT_APP_API_KEY}&number=12`
+        `http://localhost:3014/api/recipes`
       );
       const data = await api.json();
       console.log(data);
@@ -166,7 +168,7 @@ const useApplicationData = () => {
     dispatch({ type: "SET_CATEGORY_ID", payload: categoryId });
   };
 
-  //function to handle user loggin in 
+  //function to handle user loggin in
   const loginHandler = async (loginInfo) => {
   try {
     const response = await fetch('http://localhost:3014/api/users/login', {
@@ -186,7 +188,7 @@ const useApplicationData = () => {
         // Handle login failure
         console.error('Login failed:', data.message);
       }
-      
+
     } else {
       // Handle HTTP error
       console.error('HTTP error:', response.status);
@@ -213,7 +215,7 @@ const myRecipeClickHandler = () => {
     state,
     handleAddRecipe,
     toggleModal,
-    categoryClickHandler, 
+    categoryClickHandler,
     loginHandler,
     logoutHandler,
     favClickHandler,
