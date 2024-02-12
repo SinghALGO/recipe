@@ -27,11 +27,11 @@ const RecipeDetailsModal = ({ recipeData, clickHandler, userId, favRecipes, remF
           <h3>Ingredients:</h3>
           <p>{recipeData[0].ingredients}</p>
           <h3>Instructions:</h3>
-          <p>{recipeData[0].description}</p> 
+          <p>{recipeData[0].description}</p>
              </div>
           </div>
-         
-          
+
+
         </div>
         <div className="modal-buttons">
             {userId !== "" && (
@@ -46,7 +46,7 @@ const RecipeDetailsModal = ({ recipeData, clickHandler, userId, favRecipes, remF
           )}
           {recipeData[1]===true?<><button>Edit</button><button>Delete</button></>:<></>}
         </div>
-       
+
       </div>
     </div>
   );
